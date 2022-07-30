@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-import Background from "./components/Background";
 import MenuButton from "./components/MenuButton";
 
 interface MenuItem {
@@ -17,8 +16,7 @@ function RuleItem({value}:MenuItem) {
 
 function Rules() {
     return(
-        <div className="flex min-h-screen justify-center items-center">
-            <Background/>
+        <div className="flex min-h-screen justify-center items-center bg-cover" style={{backgroundImage: "url(detective-pikachu.png)"}}>
             <div className="absolute flex-col flex p-10 md:p-48">
                 <div className="mb-8 flex">
                     <p className="text-2xl text-white font-press-start pb-2 border-b-8 max-w-2">
