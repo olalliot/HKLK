@@ -16,9 +16,9 @@ function CharacterImage({dexName, isPok1, selectPokemon, dexBST, showBST}:Charac
     return (
         <div onClick={() => selectPokemon(isPok1)} className="h-2/4 w-screen md:w-2/4 md:h-screen justify-center items-center flex flex-col cursor-pointer">
             <div className="opacity-0 w-screen md:w-2/4 h-2/4 md:h-screen bg-black absolute md:hover:opacity-30"/>
-            <img alt={dexName} src={`/sprites/${dexName.toLowerCase()}.gif`} className="md:w-40"/>
-            <p className="text-white font-press-start text-lg mt-5">{dexName}</p>
-            {showBST ? <p className="text-white font-press-start text-md mt-5">{dexBST}</p> : <p className="opacity-0 mt-5">{dexBST}</p>}
+            <img alt={dexName} src={`/sprites/${dexName.toLowerCase()}.gif`} className="md:w-40 h-auto"/>
+            <p className="text-white font-press-start text-lg my-5">{dexName}</p>
+            {showBST ? <p className="text-white font-press-start text-md">{dexBST}</p> : <p className="opacity-0">{dexBST}</p>}
         </div>
     )
 }
@@ -28,7 +28,7 @@ function Game() {
     const hardMode = searchParams.get("hardMode");
 
     const [currentScore, setCurrentScore] = useState(0);
-    const [timerClock, setTimerClock] = useState(10);
+    const [timerClock, setTimerClock] = useState(5);
     const [showBST, setShowBST] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const [pok1, setPok1] = useState<{
@@ -86,46 +86,50 @@ function Game() {
         egg2: ""
     });
 
-    const generate = () => {
+    const start = () => {
+        // Sets up a new game
         setShowBST(false);
-        if (!pok1.name && !pok2.name) { // First load
-            const poke1 = pokemon[helpers.getRandomArbitrary(1, 902)]
-            const poke1ID = typeof(poke1.id) === "number" ? poke1.id.toString() : poke1.id;
-            setPok1({
-                id: poke1ID,
-                name: poke1.name,
-                altForm: poke1.altForm,
-                type1: poke1.type1,
-                type2: poke1.type2,
-                bst: poke1.bst,
-                ability: poke1.ability,
-                ability2: poke1.ability2,
-                hiddenAbility: poke1.hiddenAbility,
-                generation: poke1.generation,
-                egg: poke1.egg,
-                egg2: poke1.egg2
-            });
-    
-            let poke2 = pokemon[helpers.getRandomArbitrary(1, 902)]
-            while (poke2.id === poke1.id) poke2 = pokemon[helpers.getRandomArbitrary(1, 902)] // avoids having the two be equal
-            const poke2ID = typeof(poke2.id) === "number" ? poke2.id.toString() : poke2.id;
-            setPok2({
-                id: poke2ID,
-                name: poke2.name,
-                altForm: poke2.altForm,
-                type1: poke2.type1,
-                type2: poke2.type2,
-                bst: poke2.bst,
-                ability: poke2.ability,
-                ability2: poke2.ability2,
-                hiddenAbility: poke2.hiddenAbility,
-                generation: poke2.generation,
-                egg: poke2.egg,
-                egg2: poke2.egg2
-            });
+        setTimerClock(5);
+        setCurrentScore(0);
+        setGameOver(false);
+        const poke1 = pokemon[helpers.getRandomArbitrary(1, 902)]
+        const poke1ID = typeof(poke1.id) === "number" ? poke1.id.toString() : poke1.id;
+        setPok1({
+            id: poke1ID,
+            name: poke1.name,
+            altForm: poke1.altForm,
+            type1: poke1.type1,
+            type2: poke1.type2,
+            bst: poke1.bst,
+            ability: poke1.ability,
+            ability2: poke1.ability2,
+            hiddenAbility: poke1.hiddenAbility,
+            generation: poke1.generation,
+            egg: poke1.egg,
+            egg2: poke1.egg2
+        });
+        let poke2 = pokemon[helpers.getRandomArbitrary(1, 902)]
+        while (poke2.id === poke1.id) poke2 = pokemon[helpers.getRandomArbitrary(1, 902)] // avoids having the two be equal
+        const poke2ID = typeof(poke2.id) === "number" ? poke2.id.toString() : poke2.id;
+        setPok2({
+            id: poke2ID,
+            name: poke2.name,
+            altForm: poke2.altForm,
+            type1: poke2.type1,
+            type2: poke2.type2,
+            bst: poke2.bst,
+            ability: poke2.ability,
+            ability2: poke2.ability2,
+            hiddenAbility: poke2.hiddenAbility,
+            generation: poke2.generation,
+            egg: poke2.egg,
+            egg2: poke2.egg2
+        });
+    }
 
-            return;
-        }
+    const generate = () => {
+        // Randomly selects one of the two options and finds new pokemon
+        setShowBST(false);
         const coinFlip = Math.random();
         if (coinFlip < 0.5) {
             let poke1 = pokemon[helpers.getRandomArbitrary(1, 902)]
@@ -167,6 +171,7 @@ function Game() {
     }
 
     const compare = async (select1:boolean) => {
+        // Compares user selected option with other to see if BST is higher. Ends game if strictly less
         const userChoice = select1? pok1 : pok2;
         const other = select1? pok2: pok1;
         setShowBST(true);
@@ -175,17 +180,10 @@ function Game() {
             endGame();
             return;
         } else {
-            setTimerClock(10);
+            if (hardMode === "true") setTimerClock(5);
             setCurrentScore(currentScore + 1);
             generate();
         }
-    }
-
-    const restart = () => {
-        generate();
-        setTimerClock(10);
-        setCurrentScore(0);
-        setGameOver(false);
     }
 
     const endGame = () => {
@@ -201,7 +199,7 @@ function Game() {
     }
 
     useEffect(() => { // onLoad
-        generate()
+        start()
     }, [])
 
     useEffect(() => { // Timer for hard mode
@@ -229,7 +227,7 @@ function Game() {
                     <p className="text-3xl font-bold mb-10">Game Over!</p>
                     <p className="mb-3">Final Score: {currentScore}</p>
                     <p>High Score: {hardMode === "true" ? helpers.getHardHighScore() : helpers.getClassicHighScore()}</p>
-                    <button onClick={() => restart()} className="mt-10">
+                    <button onClick={() => start()} className="mt-10">
                         <MenuButton title="Play Again"/>
                     </button>
                     <Link to="/">
@@ -245,7 +243,7 @@ function Game() {
             <div className={`${hardMode === "true" ? 'opacity-100': 'opacity-0'} fixed top-5 right-5 z-20 font-press-start font-extrabold text-white text-lg`}>
                 {timerClock}s
             </div>
-            <div className="absolute flex flex-col md:flex-row justify-around md:justify-center min-h-screen w-screen items-center">
+            <div className="absolute flex flex-col md:flex-row justify-around md:justify-center h-screen w-screen items-center">
                 <CharacterImage dexName={pok1.name} dexBST={pok1.bst} showBST={showBST} isPok1={true} selectPokemon={compare}/>
                 <div className="absolute text-white text-lg h-full flex items-center justify-center z-10">
                     <div className="z-10 h-16 w-16 flex justify-center items-center font-extrabold font-press-start">
