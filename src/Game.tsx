@@ -14,8 +14,8 @@ interface CharacterImageInt {
 
 function CharacterImage({dexName, isPok1, selectPokemon, dexBST, showBST}:CharacterImageInt) {
     return (
-        <div onClick={() => selectPokemon(isPok1)} className="h-2/4 w-screen md:w-2/4 md:h-screen justify-center items-center flex flex-col cursor-pointer">
-            <div className="opacity-0 w-screen md:w-2/4 h-2/4 md:h-screen bg-black absolute md:hover:opacity-30"/>
+        <div className="h-2/4 w-screen md:w-2/4 md:h-screen justify-center items-center flex flex-col cursor-pointer">
+            <div onClick={() => selectPokemon(isPok1)} className="z-10 opacity-100 w-screen md:w-2/4 h-2/4 md:h-screen bg-transparent absolute md:hover:opacity-30 md:hover:bg-black"/>
             <img alt={dexName} src={`/sprites/${dexName.toLowerCase()}.gif`} className="md:w-40 h-auto"/>
             <p className="text-white font-press-start text-lg my-5">{dexName}</p>
             {showBST ? <p className="text-white font-press-start text-md">{dexBST}</p> : <p className="opacity-0">{dexBST}</p>}
