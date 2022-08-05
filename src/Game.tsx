@@ -15,8 +15,8 @@ interface CharacterImageInt {
 function CharacterImage({dexName, isPok1, selectPokemon, dexBST, showBST}:CharacterImageInt) {
     return (
         <div className="h-2/4 w-screen md:w-2/4 md:h-screen justify-center items-center flex flex-col cursor-pointer">
-            <div onClick={() => selectPokemon(isPok1)} className="z-10 opacity-100 w-screen md:w-2/4 h-2/4 md:h-screen bg-transparent absolute md:hover:opacity-30 md:hover:bg-black"/>
-            <img alt={dexName} src={`/sprites/${dexName.toLowerCase()}.gif`} className="md:w-40 h-auto"/>
+            <div onClick={() => selectPokemon(isPok1)} className="z-10 opacity-100 w-screen md:w-2/4 h-1/2 md:h-screen bg-transparent absolute md:hover:opacity-30 md:hover:bg-black"/>
+            <img alt={dexName} src={`/sprites/${dexName.toLowerCase()}.gif`} className="w-auto md:w-40 h-auto"/>
             <p className="text-white font-press-start text-lg my-5">{dexName}</p>
             {showBST ? <p className="text-white font-press-start text-md">{dexBST}</p> : <p className="opacity-0">{dexBST}</p>}
         </div>
@@ -245,7 +245,7 @@ function Game() {
             </div>
             <div className="absolute flex flex-col md:flex-row justify-around md:justify-center h-screen w-screen items-center">
                 <CharacterImage dexName={pok1.name} dexBST={pok1.bst} showBST={showBST} isPok1={true} selectPokemon={compare}/>
-                <div className="absolute text-white text-lg h-full flex items-center justify-center z-10">
+                <div className="absolute text-white text-lg h-auto flex items-center justify-center z-10">
                     <div className="z-10 h-16 w-16 flex justify-center items-center font-extrabold font-press-start">
                         {currentScore}
                     </div>
