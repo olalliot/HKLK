@@ -18,7 +18,7 @@ function App() {
           <MenuButton title="Rules"/>
         </Link>
       </div>
-      <div className="fixed bottom-5 left-5 font-press-start text-white text-xs">
+      <div className="fixed bottom-5 left-5 font-press-start text-white text-xs hidden">
         Built by <a href="https://twitter.com/OLalliot" className="text-[#1DA1F2]" target="_blank" rel="noopener">@Olalliot</a>
       </div>
     </div>
