@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import ReactGA from "react-ga";
 import MenuButton from "./components/MenuButton";
 import { Link } from "react-router-dom";
 
@@ -7,6 +8,10 @@ function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [timerMode, setTimerMode] = useState(false);
   const [includeLegendaries, setIncludeLegendaries] = useState(false);
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
 
   return (
     <div className="flex min-h-screen justify-center items-center bg-cover" style={{backgroundImage: "url(detective-pikachu.png)"}}>

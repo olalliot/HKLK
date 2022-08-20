@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
+import ReactGA from "react-ga";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -14,6 +15,10 @@ import OneStat from './OneStat';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const TRACKING_ID = "UA-148838947-2";
+ReactGA.initialize(TRACKING_ID);
+
 root.render(
   <BrowserRouter>
     <Routes>

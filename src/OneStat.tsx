@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import ReactGA from 'react-ga';
 import EndScreen from "./components/EndScreen";
 import pokemon from "./utils/csvjson.json";
 import * as helpers from "./utils/helpers";
@@ -92,6 +93,7 @@ function OneStat() {
     });
 
     useEffect(() => {
+        ReactGA.pageview(window.location.pathname + window.location.search);
         start();
     }, []);
 

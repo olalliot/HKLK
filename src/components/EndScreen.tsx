@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import * as helpers from "../utils/helpers";
+import ReactGA from "react-ga";
 import MenuButton from "./MenuButton";
 
 interface EndScreenProps {
@@ -19,6 +20,14 @@ function EndScreen({currentScore, hardMode, oneStat, start}: EndScreenProps) {
         }
     }
 
+    const startNew = () => {
+        ReactGA.event({
+            category: "User",
+            action: "Start Game"
+        })
+        start();
+    }
+
     return (
         <div className="flex min-h-screen justify-center items-center bg-cover" style={{backgroundImage: `url("pikachu.gif")`}}>
             <div className="bg-black opacity-80 fixed top-0 left-0 h-screen w-screen"/>
@@ -26,7 +35,7 @@ function EndScreen({currentScore, hardMode, oneStat, start}: EndScreenProps) {
                 <p className="text-3xl font-bold mb-10">Game Over!</p>
                 <p className="mb-3">Final Score: {currentScore}</p>
                 <p>High Score: {highscore()} </p>
-                <button onClick={() => start()} className="mt-10">
+                <button onClick={() => startNew()} className="mt-10">
                     <MenuButton title="Play Again"/>
                 </button>
                 <Link to="/">

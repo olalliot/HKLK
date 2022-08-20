@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import ReactGA from "react-ga";
 import * as helpers from "./utils/helpers";
 import pokemon from "./utils/csvjson.json";
 import { CharacterImage } from "./components/CharacterImage";
@@ -143,7 +144,8 @@ function BST() {
     }
 
     useEffect(() => { // onLoad
-        start()
+        start();
+        ReactGA.pageview(window.location.pathname + window.location.search);
     }, [])
 
     useEffect(() => { // Timer for hard mode

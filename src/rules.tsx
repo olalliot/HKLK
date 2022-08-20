@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+import ReactGA from "react-ga";
+import { useEffect } from "react";
 import MenuButton from "./components/MenuButton";
 
 interface MenuItem {
@@ -15,6 +16,11 @@ function RuleItem({value}:MenuItem) {
 }
 
 function Rules() {
+
+    useEffect(() => {
+        ReactGA.pageview(window.location.pathname + window.location.search);
+    }, [])
+
     return(
         <div className="flex min-h-screen justify-center items-center bg-cover" style={{backgroundImage: "url(detective-pikachu.png)"}}>
             <div className="absolute flex-col flex p-10 md:p-48">
