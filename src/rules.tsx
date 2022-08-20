@@ -24,10 +24,10 @@ function Rules() {
                     </p>
                 </div>
                 <div className="text-white text-sm font-press-start">
-                    <RuleItem value="Each round, you will be presented with 2 Pokémon. Select the one you think has the higher Base Stat Total (BST)"/>
-                    <RuleItem value="If two Pokémon have the same BST, you can select either one" />
-                    <RuleItem value="There are no regional forms (i.e.: Vulpix & Alolan Vulpix)" />
-                    <RuleItem value="In Hard mode, you have to select an answer before the clock runs out. If it hits 0, the game is over!" />
+                    <RuleItem value="Each round, you will be presented with 2 Pokémon. In BST mode, select the Pokémon with the higher Base Stat Total. In One Stat, select the Pokémon according to the current stat."/>
+                    <RuleItem value="If two Pokémon have the same stat value, you can select either one" />
+                    <RuleItem value="There are no altered forms (i.e.: Megas, Dynamax, Fusions, etc.)" />
+                    <RuleItem value="With the Timer, you have to select an answer before the clock runs out. If it hits 0, the game is over!" />
                 </div>
                 <div className="flex justify-center mt-8">
                     <Link to="/">
