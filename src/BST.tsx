@@ -2,28 +2,10 @@ import MenuButton from "./components/MenuButton";
 import { Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import * as helpers from "./utils/helpers";
-import pokemon from "./utils/data.json";
+import pokemon from "./utils/csvjson.json";
+import { CharacterImage } from "./components/CharacterImage";
 
-interface CharacterImageInt {
-    dexName: string;
-    isPok1: boolean;
-    selectPokemon: (select1: boolean) => void;
-    dexBST: number;
-    showBST: boolean;
-}
-
-function CharacterImage({dexName, isPok1, selectPokemon, dexBST, showBST}:CharacterImageInt) {
-    return (
-        <div className="h-2/4 w-screen md:w-2/4 md:h-screen justify-center items-center flex flex-col cursor-pointer">
-            <div onClick={() => selectPokemon(isPok1)} className="z-10 opacity-100 w-screen md:w-2/4 h-1/2 md:h-screen bg-transparent absolute md:hover:opacity-30 md:hover:bg-black"/>
-            <img alt={dexName} src={`/sprites/${dexName.toLowerCase()}.gif`} className="w-auto md:w-40 h-auto"/>
-            <p className="text-white font-press-start text-lg my-5">{dexName}</p>
-            {showBST ? <p className="text-white font-press-start text-md">{dexBST}</p> : <p className="opacity-0">{dexBST}</p>}
-        </div>
-    )
-}
-
-function Game() {
+function BST() {
     const [searchParams, _] = useSearchParams();
     const hardMode = searchParams.get("hardMode");
 
@@ -37,6 +19,11 @@ function Game() {
         altForm: string;
         type1: string;
         type2: string;
+        attack: number;
+        defense: number;
+        speAttack: number;
+        speDefense: number;
+        speed: number;
         bst: number;
         ability: string;
         ability2: string;
@@ -50,6 +37,11 @@ function Game() {
         altForm: "",
         type1: "",
         type2: "",
+        attack: 0,
+        defense: 0,
+        speAttack: 0,
+        speDefense: 0,
+        speed: 0,
         bst: 0,
         ability: "",
         ability2: "",
@@ -64,6 +56,11 @@ function Game() {
         altForm: string;
         type1: string;
         type2: string;
+        attack: number;
+        defense: number;
+        speAttack: number;
+        speDefense: number;
+        speed: number;
         bst: number;
         ability: string;
         ability2: string;
@@ -77,6 +74,11 @@ function Game() {
         altForm: "",
         type1: "",
         type2: "",
+        attack: 0,
+        defense: 0,
+        speAttack: 0,
+        speDefense: 0,
+        speed: 0,
         bst: 0,
         ability: "",
         ability2: "",
@@ -92,7 +94,7 @@ function Game() {
         setTimerClock(5);
         setCurrentScore(0);
         setGameOver(false);
-        const poke1 = pokemon[helpers.getRandomArbitrary(1, 902)]
+        const poke1 = pokemon[helpers.getRandomArbitrary(0, 960)]
         const poke1ID = typeof(poke1.id) === "number" ? poke1.id.toString() : poke1.id;
         setPok1({
             id: poke1ID,
@@ -100,6 +102,11 @@ function Game() {
             altForm: poke1.altForm,
             type1: poke1.type1,
             type2: poke1.type2,
+            attack: poke1.attack,
+            defense: poke1.defense,
+            speAttack: poke1.speAttack,
+            speDefense: poke1.speDefense,
+            speed: poke1.speed,
             bst: poke1.bst,
             ability: poke1.ability,
             ability2: poke1.ability2,
@@ -108,7 +115,7 @@ function Game() {
             egg: poke1.egg,
             egg2: poke1.egg2
         });
-        let poke2 = pokemon[helpers.getRandomArbitrary(1, 902)]
+        let poke2 = pokemon[helpers.getRandomArbitrary(0, 960)]
         while (poke2.id === poke1.id) poke2 = pokemon[helpers.getRandomArbitrary(1, 902)] // avoids having the two be equal
         const poke2ID = typeof(poke2.id) === "number" ? poke2.id.toString() : poke2.id;
         setPok2({
@@ -117,6 +124,11 @@ function Game() {
             altForm: poke2.altForm,
             type1: poke2.type1,
             type2: poke2.type2,
+            attack: poke2.attack,
+            defense: poke2.defense,
+            speAttack: poke2.speAttack,
+            speDefense: poke2.speDefense,
+            speed: poke2.speed,
             bst: poke2.bst,
             ability: poke2.ability,
             ability2: poke2.ability2,
@@ -132,15 +144,20 @@ function Game() {
         setShowBST(false);
         const coinFlip = Math.random();
         if (coinFlip < 0.5) {
-            let poke1 = pokemon[helpers.getRandomArbitrary(1, 902)]
+            let poke1 = pokemon[helpers.getRandomArbitrary(0, 960)]
             const poke1ID = typeof(poke1.id) === "number" ? poke1.id.toString() : poke1.id;
-            while (poke1ID === pok2.id) poke1 = pokemon[helpers.getRandomArbitrary(1, 902)]
+            while (poke1ID === pok2.id) poke1 = pokemon[helpers.getRandomArbitrary(0, 960)]
             setPok1({
                 id: poke1ID,
                 name: poke1.name,
                 altForm: poke1.altForm,
                 type1: poke1.type1,
                 type2: poke1.type2,
+                attack: poke1.attack,
+                defense: poke1.defense,
+                speAttack: poke1.speAttack,
+                speDefense: poke1.speDefense,
+                speed: poke1.speed,
                 bst: poke1.bst,
                 ability: poke1.ability,
                 ability2: poke1.ability2,
@@ -150,15 +167,20 @@ function Game() {
                 egg2: poke1.egg2
             });
         } else {
-            let poke2 = pokemon[helpers.getRandomArbitrary(1, 902)]
+            let poke2 = pokemon[helpers.getRandomArbitrary(0, 960)]
             const poke2ID = typeof(poke2.id) === "number" ? poke2.id.toString() : poke2.id;
-            while (poke2ID === pok1.id) poke2 = pokemon[helpers.getRandomArbitrary(1, 902)] // avoids having the two be equal
+            while (poke2ID === pok1.id) poke2 = pokemon[helpers.getRandomArbitrary(0, 960)] // avoids having the two be equal
             setPok2({
                 id: poke2ID,
                 name: poke2.name,
                 altForm: poke2.altForm,
                 type1: poke2.type1,
                 type2: poke2.type2,
+                attack: poke2.attack,
+                defense: poke2.defense,
+                speAttack: poke2.speAttack,
+                speDefense: poke2.speDefense,
+                speed: poke2.speed,
                 bst: poke2.bst,
                 ability: poke2.ability,
                 ability2: poke2.ability2,
@@ -257,4 +279,4 @@ function Game() {
     )
 }
 
-export default Game;
+export default BST;

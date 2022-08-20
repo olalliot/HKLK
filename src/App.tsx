@@ -8,10 +8,10 @@ function App() {
           <img src="/Logo.png" alt="Hi Kick Low Kick" className="w-96 md:w-2/6" />
         </div>
       <div className="absolute">
-        <Link to="/game?hardMode=false">
+        <Link to="/bst?hardMode=false">
           <MenuButton title="CLassic Mode"/>
         </Link>
-        <Link to="/game?hardMode=true">
+        <Link to="/bst?hardMode=true">
           <MenuButton title="Hard Mode"/>
         </Link>
         <Link to="/rules">

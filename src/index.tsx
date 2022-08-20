@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -9,7 +8,7 @@ import {
   Route,
 } from "react-router-dom";
 import Rules from './rules';
-import Game from './Game';
+import BST from './BST';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,7 +19,7 @@ root.render(
       <Route path="/" element={<App />}>
         <Route index element={<App />}/>
       </Route>
-      <Route path="game" element={<Game/>}/>
+      <Route path="bst" element={<BST/>}/>
       <Route path="rules" element={<Rules/>} />
     </Routes>
   </BrowserRouter>
