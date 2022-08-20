@@ -13,21 +13,39 @@ export function sleep(milliseconds: number) {
 //Helper Functions for high score tracking
 ///////////////////////////////////////
 
-export function getClassicHighScore() {
+export function getBSTHighScore() {
     return localStorage.getItem("classicMode") || "";
 }
 
 
-export function setClassicHighScore(score: number) {
+export function setBSTHighScore(score: number) {
     localStorage.setItem("classicMode", JSON.stringify(score));
     return
 }
 
-export function getHardHighScore() {
+export function getBSTHardHighScore() {
     return localStorage.getItem("hardMode") || "";
 }
 
-export function setHardHighScore(score: number) {
+export function setBSTHardHighScore(score: number) {
     localStorage.setItem("hardMode", JSON.stringify(score));
+    return;
+}
+
+export function getOneStatHighScore() {
+    return localStorage.getItem("oneStat") || "";
+}
+
+export function setOneStatHighScore(score: number) {
+    localStorage.setItem("oneStat", JSON.stringify(score))
+    return;
+}
+
+export function getOneStatHardModeHighScore() {
+    return localStorage.getItem("oneStatHard") || "";
+}
+
+export function setOneStatHardModeHighScore(score: number) {
+    localStorage.setItem("oneStatHard", JSON.stringify(score));
     return;
 }

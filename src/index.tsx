@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Rules from './rules';
 import BST from './BST';
+import OneStat from './OneStat';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,6 +21,7 @@ root.render(
         <Route index element={<App />}/>
       </Route>
       <Route path="bst" element={<BST/>}/>
+      <Route path="onestat" element={<OneStat/>}/>
       <Route path="rules" element={<Rules/>} />
     </Routes>
   </BrowserRouter>

@@ -1,29 +1,26 @@
-import MenuButton from "./components/MenuButton";
-import { Link, useSearchParams } from "react-router-dom";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import * as helpers from "./utils/helpers";
 import pokemon from "./utils/csvjson.json";
 import { CharacterImage } from "./components/CharacterImage";
+import EndScreen from "./components/EndScreen";
 
 function BST() {
     const [searchParams, _] = useSearchParams();
-    const hardMode = searchParams.get("hardMode");
+    const hardMode = searchParams.get("timer") || "false";
+    const includeLegendaries = searchParams.get("legendaries");
 
     const [currentScore, setCurrentScore] = useState(0);
     const [timerClock, setTimerClock] = useState(5);
     const [showBST, setShowBST] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const [pok1, setPok1] = useState<{
-        id: string;
+        id: number;
         name: string;
         altForm: string;
         type1: string;
         type2: string;
-        attack: number;
-        defense: number;
-        speAttack: number;
-        speDefense: number;
-        speed: number;
         bst: number;
         ability: string;
         ability2: string;
@@ -32,16 +29,11 @@ function BST() {
         egg: string;
         egg2: string;
     }>({
-        id: "1",
+        id: 0,
         name: "",
         altForm: "",
         type1: "",
         type2: "",
-        attack: 0,
-        defense: 0,
-        speAttack: 0,
-        speDefense: 0,
-        speed: 0,
         bst: 0,
         ability: "",
         ability2: "",
@@ -51,16 +43,11 @@ function BST() {
         egg2: ""
     });
     const [pok2, setPok2] = useState<{
-        id: string;
+        id: number;
         name: string;
         altForm: string;
         type1: string;
         type2: string;
-        attack: number;
-        defense: number;
-        speAttack: number;
-        speDefense: number;
-        speed: number;
         bst: number;
         ability: string;
         ability2: string;
@@ -69,16 +56,11 @@ function BST() {
         egg: string;
         egg2: string;
     }>({
-        id: "1",
+        id: 0,
         name: "",
         altForm: "",
         type1: "",
         type2: "",
-        attack: 0,
-        defense: 0,
-        speAttack: 0,
-        speDefense: 0,
-        speed: 0,
         bst: 0,
         ability: "",
         ability2: "",
@@ -94,49 +76,19 @@ function BST() {
         setTimerClock(5);
         setCurrentScore(0);
         setGameOver(false);
-        const poke1 = pokemon[helpers.getRandomArbitrary(0, 960)]
-        const poke1ID = typeof(poke1.id) === "number" ? poke1.id.toString() : poke1.id;
-        setPok1({
-            id: poke1ID,
-            name: poke1.name,
-            altForm: poke1.altForm,
-            type1: poke1.type1,
-            type2: poke1.type2,
-            attack: poke1.attack,
-            defense: poke1.defense,
-            speAttack: poke1.speAttack,
-            speDefense: poke1.speDefense,
-            speed: poke1.speed,
-            bst: poke1.bst,
-            ability: poke1.ability,
-            ability2: poke1.ability2,
-            hiddenAbility: poke1.hiddenAbility,
-            generation: poke1.generation,
-            egg: poke1.egg,
-            egg2: poke1.egg2
-        });
+        let poke1 = pokemon[helpers.getRandomArbitrary(0, 960)]
+        if (includeLegendaries === "false") {
+            // Prevents it from pickign a legendary
+            while (poke1.legendary !== "NULL") poke1 = pokemon[helpers.getRandomArbitrary(0, 960)];
+        }
+        setPok1(poke1);
         let poke2 = pokemon[helpers.getRandomArbitrary(0, 960)]
         while (poke2.id === poke1.id) poke2 = pokemon[helpers.getRandomArbitrary(1, 902)] // avoids having the two be equal
-        const poke2ID = typeof(poke2.id) === "number" ? poke2.id.toString() : poke2.id;
-        setPok2({
-            id: poke2ID,
-            name: poke2.name,
-            altForm: poke2.altForm,
-            type1: poke2.type1,
-            type2: poke2.type2,
-            attack: poke2.attack,
-            defense: poke2.defense,
-            speAttack: poke2.speAttack,
-            speDefense: poke2.speDefense,
-            speed: poke2.speed,
-            bst: poke2.bst,
-            ability: poke2.ability,
-            ability2: poke2.ability2,
-            hiddenAbility: poke2.hiddenAbility,
-            generation: poke2.generation,
-            egg: poke2.egg,
-            egg2: poke2.egg2
-        });
+        if (includeLegendaries === "false") {
+            // Prevents it from pickign a legendary
+            while (poke2.legendary!== "NULL") poke2 = pokemon[helpers.getRandomArbitrary(0, 960)];
+        }
+        setPok2(poke2);
     }
 
     const generate = () => {
@@ -145,50 +97,20 @@ function BST() {
         const coinFlip = Math.random();
         if (coinFlip < 0.5) {
             let poke1 = pokemon[helpers.getRandomArbitrary(0, 960)]
-            const poke1ID = typeof(poke1.id) === "number" ? poke1.id.toString() : poke1.id;
-            while (poke1ID === pok2.id) poke1 = pokemon[helpers.getRandomArbitrary(0, 960)]
-            setPok1({
-                id: poke1ID,
-                name: poke1.name,
-                altForm: poke1.altForm,
-                type1: poke1.type1,
-                type2: poke1.type2,
-                attack: poke1.attack,
-                defense: poke1.defense,
-                speAttack: poke1.speAttack,
-                speDefense: poke1.speDefense,
-                speed: poke1.speed,
-                bst: poke1.bst,
-                ability: poke1.ability,
-                ability2: poke1.ability2,
-                hiddenAbility: poke1.hiddenAbility,
-                generation: poke1.generation,
-                egg: poke1.egg,
-                egg2: poke1.egg2
-            });
+            while (pok1.id === pok2.id) poke1 = pokemon[helpers.getRandomArbitrary(0, 960)];
+            if (includeLegendaries === "false") {
+                // Prevents it from pickign a legendary
+                while (poke1.legendary!== "NULL") poke1 = pokemon[helpers.getRandomArbitrary(0, 960)];
+            }
+            setPok1(poke1);
         } else {
             let poke2 = pokemon[helpers.getRandomArbitrary(0, 960)]
-            const poke2ID = typeof(poke2.id) === "number" ? poke2.id.toString() : poke2.id;
-            while (poke2ID === pok1.id) poke2 = pokemon[helpers.getRandomArbitrary(0, 960)] // avoids having the two be equal
-            setPok2({
-                id: poke2ID,
-                name: poke2.name,
-                altForm: poke2.altForm,
-                type1: poke2.type1,
-                type2: poke2.type2,
-                attack: poke2.attack,
-                defense: poke2.defense,
-                speAttack: poke2.speAttack,
-                speDefense: poke2.speDefense,
-                speed: poke2.speed,
-                bst: poke2.bst,
-                ability: poke2.ability,
-                ability2: poke2.ability2,
-                hiddenAbility: poke2.hiddenAbility,
-                generation: poke2.generation,
-                egg: poke2.egg,
-                egg2: poke2.egg2
-            });    
+            while (pok2.id === pok1.id) poke2 = pokemon[helpers.getRandomArbitrary(0, 960)] // avoids having the two be equal
+            if (includeLegendaries === "false") {
+                // Prevents it from pickign a legendary
+                while (poke2.legendary!== "NULL") poke2 = pokemon[helpers.getRandomArbitrary(0, 960)];
+            }
+            setPok2(poke2);    
         }
     }
 
@@ -211,11 +133,11 @@ function BST() {
     const endGame = () => {
         const currScore = currentScore;
         if (hardMode === "true") {
-            const best = helpers.getHardHighScore();
-            if (!best || parseInt(best) < currScore) helpers.setHardHighScore(currScore);
+            const best = helpers.getBSTHardHighScore();
+            if (!best || parseInt(best) < currScore) helpers.setBSTHardHighScore(currScore);
         } else {
-            const best = helpers.getClassicHighScore();
-            if (!best || parseInt(best) < currScore) helpers.setClassicHighScore(currScore)
+            const best = helpers.getBSTHighScore();
+            if (!best || parseInt(best) < currScore) helpers.setBSTHighScore(currScore)
         }
         setGameOver(true);
     }
@@ -243,20 +165,7 @@ function BST() {
 
     if (gameOver) { //Game Over screen
         return (
-            <div className="flex min-h-screen justify-center items-center bg-cover" style={{backgroundImage: `url("pikachu.gif")`}}>
-                <div className="bg-black opacity-80 fixed top-0 left-0 h-screen w-screen"/>
-                <div className="font-press-start text-white flex z-10 flex-col">
-                    <p className="text-3xl font-bold mb-10">Game Over!</p>
-                    <p className="mb-3">Final Score: {currentScore}</p>
-                    <p>High Score: {hardMode === "true" ? helpers.getHardHighScore() : helpers.getClassicHighScore()}</p>
-                    <button onClick={() => start()} className="mt-10">
-                        <MenuButton title="Play Again"/>
-                    </button>
-                    <Link to="/">
-                        <MenuButton title="Exit"/>
-                    </Link>
-                </div>
-            </div>
+            <EndScreen currentScore={currentScore} hardMode={hardMode} start={start} oneStat={false}/>
         )
     }
 
