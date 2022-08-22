@@ -8,6 +8,7 @@ import { CharacterImage } from "./components/CharacterImage";
 import EndScreen from "./components/EndScreen";
 
 function BST() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [searchParams, _] = useSearchParams();
     const hardMode = searchParams.get("timer") || "false";
     const includeLegendaries = searchParams.get("legendaries");

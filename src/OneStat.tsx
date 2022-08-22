@@ -8,6 +8,7 @@ import * as helpers from "./utils/helpers";
 import { CharacterImage } from "./components/CharacterImage";
 
 function OneStat() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [searchParams, _] = useSearchParams();
     const hardMode = searchParams.get("timer") || "false";
     const includeLegendaries = searchParams.get("legendaries");
