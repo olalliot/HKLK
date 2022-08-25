@@ -190,11 +190,10 @@ function OneStat() {
     }
 
     const compare = async (select1:boolean) => {
-        // Compares user selected option with other to see if BST is higher. Ends game if strictly less
         const userChoice = select1? pok1 : pok2;
         const other = select1? pok2: pok1;
         let res = false;
-        if (selectedStat === "health") res = userChoice.health < other.health;
+        if (selectedStat === "HP") res = userChoice.health < other.health;
         else if (selectedStat === "attack") res = userChoice.attack < other.attack;
         else if (selectedStat === "defense") res = userChoice.defense < other.defense;
         else if (selectedStat === "speAttack") res = userChoice.speAttack < other.speAttack;
